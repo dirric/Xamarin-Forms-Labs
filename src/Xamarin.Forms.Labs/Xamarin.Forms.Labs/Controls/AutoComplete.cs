@@ -20,7 +20,8 @@ namespace Xamarin.Forms.Labs.Controls
             entText = new Entry()
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.Start
+                VerticalOptions = LayoutOptions.Start,
+                TextColor = Color.Black
             };
             btnSearch = new Button()
             {
@@ -245,11 +246,33 @@ namespace Xamarin.Forms.Labs.Controls
         }
 
 
+       
+
+        public static readonly BindableProperty TextColorProperty =
+            BindableProperty.Create<AutoCompleteView, Color>(p => p.TextColor, Color.Black,
+                BindingMode.TwoWay, null,
+                new BindableProperty.BindingPropertyChangedDelegate<Color>(SearchTextColorChanged), null, null);
+        public Color TextColor
+        {
+            get
+            {
+                return (Color)GetValue(TextColorProperty);
+            }
+            set
+            {
+                SetValue(TextColorProperty, value);
+            }
+        }
+
+        static void SearchTextColorChanged(BindableObject obj, Color oldValue, Color newValue)
+        {
+            (obj as AutoCompleteView).entText.TextColor= newValue;
+        }
+        
         public static readonly BindableProperty SearchBackgroundColorProperty =
             BindableProperty.Create<AutoCompleteView, Color>(p => p.SearchBackgroundColor, Color.Red,
                 BindingMode.TwoWay, null,
                 new BindableProperty.BindingPropertyChangedDelegate<Color>(SearchBackgroundColorChanged), null, null);
-
         public Color SearchBackgroundColor
         {
             get { return (Color)GetValue(SearchBackgroundColorProperty); }
